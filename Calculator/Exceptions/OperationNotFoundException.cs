@@ -3,6 +3,6 @@
     public class OperationNotFoundException : CalculatorException
     {
         public OperationNotFoundException() { }
-        public OperationNotFoundException(string message) : base(message) { }
+        public OperationNotFoundException(string operationName) : base($"Operation '{operationName}' not found") { }
     }
 }

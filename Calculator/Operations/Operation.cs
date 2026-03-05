@@ -6,21 +6,23 @@ namespace Calculator.Operations
     {
         private readonly Func<double[], double> function;
         private int argumentsCount;
+        private bool multipleArgumentsAvailable;
 
-        public Operation(Func<double[], double> function, int argumentsCount)
+        public Operation(Func<double[], double> function, int argumentsCount, bool multipleArgumentsAvailable = false)
         {
             this.function = function;
             this.argumentsCount = argumentsCount;
+            this.multipleArgumentsAvailable = multipleArgumentsAvailable;
         }
 
         public double Call(params double[] args)
         {
-            if (argumentsCount == 0 || args.Length == argumentsCount)
+            if (args.Length == argumentsCount || (multipleArgumentsAvailable && argumentsCount < args.Length))
             {
                 return function(args);
             }
 
-            throw new NotEnoughArgumentsException($"Expected {argumentsCount} arguments but {args.Length} received.");
+            throw new NotEnoughArgumentsException(argumentsCount, args.Length);
         }
     }
 }
