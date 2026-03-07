@@ -17,7 +17,7 @@ namespace Calculator.Operations
 
         public double Call(params double[] args)
         {
-            if (args.Length == argumentsCount || (multipleArgumentsAvailable && argumentsCount < args.Length))
+            if (args.Length >= argumentsCount || (multipleArgumentsAvailable && argumentsCount < args.Length))
             {
                 return function(args);
             }
