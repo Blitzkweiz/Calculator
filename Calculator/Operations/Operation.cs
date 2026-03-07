@@ -2,7 +2,7 @@
 
 namespace Calculator.Operations
 {
-    public class Operation : IOperaion
+    public class Operation : IOperation
     {
         private readonly Func<double[], double> function;
         private int argumentsCount;

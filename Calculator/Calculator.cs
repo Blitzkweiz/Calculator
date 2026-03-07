@@ -5,7 +5,7 @@ namespace Calculator
 {
     public class Calculator
     {
-        private readonly Dictionary<string, IOperaion> operations = new()
+        private readonly Dictionary<string, IOperation> operations = new()
         {
             {"+", new Operation(args => args.Sum(), argumentsCount: 1, multipleArgumentsAvailable: true)},
             {"-", new Operation(args => args[0] - args[1], argumentsCount: 2)},

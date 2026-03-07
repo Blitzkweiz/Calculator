@@ -1,6 +1,6 @@
 ﻿namespace Calculator.Operations
 {
-    public interface IOperaion
+    public interface IOperation
     {
         double Call(params double[] args);
     }
