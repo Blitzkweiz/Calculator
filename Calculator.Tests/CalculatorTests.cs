@@ -64,5 +64,21 @@ namespace Calculator.Tests
         {
             Assert.Throws<NotANumberException>(() => CalculatorModel.Calculate(operationName, arguments), "Calculation did not throw an expected exception");
         }
+
+        [TestCase("sum", new double[] { 2, 4, 3.3 }, 9.3, TestName = "Addition AddedViaAlias Successful")]
+        [TestCase("sinus", new double[] { Math.PI }, 0, TestName = "Sin AddedViaOneArgumentFunction Successful")]
+        [TestCase("atan2", new double[] { 2, 0 }, Math.PI / 2, TestName = "Atan2 AddedViaTwoArgumentsFunction Successful")]
+        public void CalculatorExtensionTest(string operationName, double[] arguments, double expectedResult)
+        {
+            var calculator = new Calculator
+            {
+                {"sum", "+"},
+                {"sinus", Math.Sin},
+                {"atan2", Math.Atan2}
+            };
+
+            var actualResult = calculator.Calculate(operationName, arguments);
+            Assert.That(actualResult, Is.EqualTo(expectedResult).Within(CalculatorConstants.EPSILON), $"Unexpected calculation result. Expected: {expectedResult}, Actual: {actualResult}");
+        }
     }
 }

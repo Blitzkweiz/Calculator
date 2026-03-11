@@ -1,9 +1,10 @@
 ﻿using Calculator.Exceptions;
 using Calculator.Operations;
+using System.Collections;
 
 namespace Calculator
 {
-    public class Calculator
+    public class Calculator : IEnumerable<KeyValuePair<string, IOperation>>
     {
         private readonly Dictionary<string, IOperation> operations = new()
         {
@@ -45,5 +46,40 @@ namespace Calculator
         {
             return [.. operations.Keys];
         }
+
+        public void Add(string key, IOperation value)
+        {
+            operations[key] = value;
+        }
+
+        public void Add(string key, Func<double[], double> func)
+        {
+            operations[key] = new Operation(func, argumentsCount: 1);
+        }
+
+        public void Add(string key, Func<double, double> func)
+        {
+            operations[key] = new Operation(args => func(args[0]), argumentsCount: 1);
+        }
+
+        public void Add(string key, Func<double, double, double> func)
+        {
+            operations[key] = new Operation(args => func(args[0], args[1]), argumentsCount: 2);
+        }
+
+        public void Add(string key, string alias)
+        {
+            if (operations.TryGetValue(alias, out var operation))
+            {
+                operations[key] = operation;
+            }
+            else
+            {
+                throw new OperationNotFoundException(alias);
+            }
+        }
+
+        public IEnumerator<KeyValuePair<string, IOperation>> GetEnumerator() => operations.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }
