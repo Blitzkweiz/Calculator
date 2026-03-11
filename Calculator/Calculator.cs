@@ -57,6 +57,11 @@ namespace Calculator
             operations[key] = new Operation(func, argumentsCount: 1);
         }
 
+        public void Add(string key, Func<double[], double> func, int argumentsCount)
+        {
+            operations[key] = new Operation(func, argumentsCount: argumentsCount);
+        }
+
         public void Add(string key, Func<double, double> func)
         {
             operations[key] = new Operation(args => func(args[0]), argumentsCount: 1);
