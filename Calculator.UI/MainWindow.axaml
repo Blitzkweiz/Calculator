@@ -1,0 +1,37 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Calculator.ViewModel"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodel="using:Calculator.ViewModel"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Calculator.UI.MainWindow"
+        x:DataType="vm:CalculatorViewModel"
+        Title="Calculator.UI">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:CalculatorViewModel/>
+    </Design.DataContext>
+
+    <Grid Margin = "10" RowDefinitions = "Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto">
+        <TextBlock Text = "Available operations:" FontWeight = "Bold" Grid.Row = "0"/>
+        <TextBlock Text = "{Binding AvailableOperations}" Grid.Row = "1"/>
+
+        <TextBlock Text = "Operation:" FontWeight = "Bold" Grid.Row = "2"/>
+        <TextBox Text = "{Binding Operation}" Watermark = "Enter operation" Grid.Row = "3"/>
+
+        <TextBlock Text = "Arguments:" FontWeight = "Bold" Grid.Row = "4"/>
+        <TextBox Text = "{Binding Arguments}" Watermark = "For example: 2 6" Grid.Row = "5"/>
+
+        <Button Command = "{Binding CalculateCommand}" Content = "Calculate" IsDefault="True"
+                Grid.Row = "6" HorizontalAlignment = "Left"/>
+
+        <StackPanel Margin = "0, 10, 0, 0" Grid.Row = "7">
+            <TextBlock Text = "Result: " FontWeight = "Bold"/>
+            <TextBlock Text = "{Binding Result}" FontSize = "16"/>
+        </StackPanel>
+    </Grid>
+
+</Window>
