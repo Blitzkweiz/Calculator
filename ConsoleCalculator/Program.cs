@@ -23,7 +23,7 @@ while (true)
 
         if (string.IsNullOrEmpty(operationName))
         {
-            throw new OperationNotFoundException(operationName);
+            throw new OperationNotFoundException();
         }
         if (operationName.Contains(exitCommand)) break;
 
@@ -43,28 +43,16 @@ while (true)
         {
             if (!double.TryParse(argumentsStrings[i], out arguments[i]))
             {
-                throw new ArgumentException($"Invalid argument: {argumentsStrings[i]}");
+                throw new CalculatorArgumentException(argumentsStrings[i]);
             }
         }
 
         var result = calculator.Calculate(operationName, arguments);
         Console.WriteLine($"Result: {result}\n");
     }
-    catch (OperationNotFoundException e)
-    {
-        Console.WriteLine($"Operation not found exception. {e.Message}");
-    }
-    catch (NotEnoughArgumentsException e)
-    {
-        Console.WriteLine($"Not enough arguments exception. {e.Message}");
-    }
-    catch (ArgumentException e)
-    {
-        Console.WriteLine($"Argument exception. {e.Message}");
-    }
     catch (CalculatorException e)
     {
-        Console.WriteLine($"Calculator Exception. {e.Message}");
+        Console.WriteLine(e.Message);
     }
     catch (Exception e)
     {

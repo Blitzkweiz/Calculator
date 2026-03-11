@@ -39,21 +39,9 @@ namespace Calculator.ViewModel
                 var result = calculator.Calculate(operationName, arguments);
                 Result = result.ToString();
             }
-            catch (OperationNotFoundException e)
-            {
-                Result = $"Operation not found exception. {e.Message}";
-            }
-            catch (NotEnoughArgumentsException e)
-            {
-                Result = $"Not enough arguments exception. {e.Message}";
-            }
-            catch (ArgumentException e)
-            {
-                Result = $"Argument exception. {e.Message}";
-            }
             catch (CalculatorException e)
             {
-                Result = $"Calculator Exception. {e.Message}";
+                Result = e.Message;
             }
             catch (Exception e)
             {
@@ -77,7 +65,7 @@ namespace Calculator.ViewModel
         {
             if (string.IsNullOrEmpty(Operation))
             {
-                throw new OperationNotFoundException(Operation);
+                throw new OperationNotFoundException();
             }
 
             return Operation;
@@ -97,7 +85,7 @@ namespace Calculator.ViewModel
             {
                 if (!double.TryParse(argumentsStrings[i], out arguments[i]))
                 {
-                    throw new ArgumentException($"Invalid argument: {argumentsStrings[i]}");
+                    throw new CalculatorArgumentException(argumentsStrings[i]);
                 }
             }
 
